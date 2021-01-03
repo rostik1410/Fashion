@@ -138,7 +138,7 @@ const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) 
         </Animated.ScrollView>
       </Animated.View>
       <View style={styles.footer}>
-        <Animated.View style={{ ...StyleSheet.absoluteFillObject }} />
+        <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: backgroundColor }} />
         <View style={styles.footerContent}>
           <View style={styles.pagination}>
             {slides.map((_, index) => (
