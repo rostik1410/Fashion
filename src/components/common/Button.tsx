@@ -3,12 +3,12 @@ import { useTheme } from "@shopify/restyle";
 import { StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
-import { ThemeType, Text } from "./Theme";
+import { Theme, Text } from "./Theme";
 
 interface ButtonProps {
   label: string;
   onPress: () => void;
-  variant?: "primary" | "default";
+  variant?: "primary" | "default" | "transparent";
 }
 
 const styles = StyleSheet.create({
@@ -21,10 +21,37 @@ const styles = StyleSheet.create({
   },
 });
 
+const getButtonColors = (variant, theme) => {
+  let backgroundColor = theme.colors.primary;
+  let color = theme.colors.white;
+
+  switch (variant) {
+    case "primary":
+      backgroundColor = theme.colors.primary;
+      color = theme.colors.white;
+      break;
+    case "transparent":
+      backgroundColor = "transparent";
+      color = theme.colors.title;
+      break;
+    case "default":
+    default:
+      backgroundColor = theme.colors.grey;
+      color = theme.colors.title;
+      break;
+  }
+
+  return {
+    backgroundColor,
+    color,
+  };
+};
+
 const Button = ({ label, onPress, variant }: ButtonProps) => {
-  const theme = useTheme<ThemeType>();
-  const backgroundColor = variant === "primary" ? theme.colors.primary : theme.colors.grey;
-  const color = variant === "primary" ? theme.colors.white : theme.colors.title;
+  const theme = useTheme<Theme>();
+  switch (variant) {
+  }
+  const { backgroundColor, color } = getButtonColors(variant, theme);
   return (
     <RectButton style={[styles.container, { backgroundColor }]} onPress={onPress}>
       <Text variant="button" style={{ color }}>

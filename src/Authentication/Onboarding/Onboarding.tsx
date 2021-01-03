@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import Animated, { divide, Extrapolate, interpolate, multiply } from "react-native-reanimated";
-import { useScrollHandler } from "react-native-redash/lib/module/v1";
+import { useScrollHandler, interpolateColor } from "react-native-redash/lib/module/v1";
 
 import { theme } from "../../components/common";
 import { Routes, StackNavigationProps } from "../../Naviagation";
@@ -52,9 +52,9 @@ const slides = [
     description: "Confused about your outfit? Don`t worry! Find the best outfit here!",
     color: "#BFEAF5",
     picture: {
-      src: require("../../../assets/images/1.jpg"),
-      width: 1920,
-      height: 1281,
+      src: require("../../../assets/images/9.png"),
+      width: 300,
+      height: 450,
     },
   },
   {
@@ -64,9 +64,9 @@ const slides = [
     color: "#BEECC4",
     right: true,
     picture: {
-      src: require("../../../assets/images/2.jpg"),
-      width: 1280,
-      height: 1600,
+      src: require("../../../assets/images/10.png"),
+      width: 431,
+      height: 579,
     },
   },
   {
@@ -75,9 +75,9 @@ const slides = [
     description: "Create your individual & unique style and look amazing everyday",
     color: "#FFE4D9",
     picture: {
-      src: require("../../../assets/images/3.jpg"),
-      width: 1920,
-      height: 1281,
+      src: require("../../../assets/images/2.png"),
+      width: 408,
+      height: 612,
     },
   },
   {
@@ -87,9 +87,9 @@ const slides = [
     color: "#FFDDDD",
     right: true,
     picture: {
-      src: require("../../../assets/images/4.jpg"),
-      width: 1280,
-      height: 1919,
+      src: require("../../../assets/images/3.png"),
+      width: 408,
+      height: 612,
     },
   },
 ];
@@ -97,13 +97,13 @@ const slides = [
 const Onboarding = ({ navigation }: StackNavigationProps<Routes, "Onboarding">) => {
   const scroll = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
-  // const backgroundColor = interpolateColor(x, {
-  //   inputRange: slides.map((_, i) => width * i),
-  //   outputColorRange: slides.map(slide => slide.color),
-  // });
+  const backgroundColor = interpolateColor(x, {
+    inputRange: slides.map((_, i) => width * i),
+    outputRange: slides.map(slide => slide.color),
+  });
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.slider, { backgroundColor: "cyan" }]}>
+      <Animated.View style={[styles.slider, { backgroundColor: backgroundColor }]}>
         {slides.map(({ picture }, index) => {
           const opacity = interpolate(x, {
             inputRange: [(index - 0.5) * width, index * width, (index + 0.5) * width],
